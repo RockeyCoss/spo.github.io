@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+        content="Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/img/COLE.jpg">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+    <style>
+        .publication-title {
+            font-family: "textsc "
+        }
+
+        video {
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .image_wrapper {
+            position: relative;
+            width: 226px;
+            height: 226px;
+        }
+
+        .image_container {
+            border-radius: 10px;
+            /*设置图片的圆角，可以根据你的需求调整这个值*/
+            /*margin: 10px; !* 在图片的外部元素上设置间距 *!*/
+            overflow: hidden;
+            /* 为了保持图片的圆角效果 */
+            position: relative;
+            width: 100%;
+
+            padding-bottom: 100%;
+        }
+
+        .image_container img {
+
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 这会使图片保持原始比例，但仍然填充其容器 */
+            object-position: center;
+            /* 新增加的代码，让图片居中 */
+        }
+
+        .caption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            /* 垂直居中 */
+            justify-content: center;
+            /* 水平居中 */
+            font-family: 'Comic Sans MS', 'Verdana', 'Tahoma', sans-serif;
+            text-align: center;
+            /* 让文本在其容器中水平居中 */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .image_container:hover .caption {
+            opacity: 1;
+        }
+
+
+
+        .column.is-2.has-text-centered img.interpolation-image {
+
+            object-fit: cover;
+            border-radius: 10px;
+            transition: opacity 0.5s ease;
+            object-position: center;
+            /* 新增加的代码，让图片居中 */
+        }
+
+        .column.is-2.has-text-centered:hover img.interpolation-image {
+            opacity: 0.5;
+        }
+
+        .column.is-2.has-text-centered .caption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            /* 垂直居中 */
+            justify-content: center;
+            /* 水平居中 */
+            font-family: 'Comic Sans MS', 'Verdana', 'Tahoma', sans-serif;
+            text-align: center;
+            /* 让文本在其容器中水平居中 */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .column.is-2.has-text-centered:hover .caption {
+            opacity: 1;
+        }
+
+        .columns.is-centered img {
+            margin-bottom: 20px;
+            /* 或者你想要的任何值 */
+        }
+
+
+        .section {
+            margin: 3px;
+            padding: 5px;
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 48%;
+            margin: 1%;
+            float: left;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        caption {
+            caption-side: bottom;
+            font-size: medium;
+        }
+
+        .highlight {
+            background-color: #e6f7ff;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+    </style>
+
+    <!--<h1 class="title is-1 publication-title">COLE :A Hierarchical Generation Framework for Graphic Design</h1>-->
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 ">Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization</h1>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a href="https://github.com/RockeyCoss">Zhanhao Liang</a>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://www.microsoft.com/en-us/research/people/yuyua/">Yuhui
+                                    Yuan</a><sup></sup>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://cientgu.github.io">Shuyang Gu</a><sup></sup>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://github.com/BHCHENGIT">Bohan Chen</a><sup></sup>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://tiankaihang.github.io/">Tiankai Hang</a><sup></sup>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://sites.google.com/a/usc.edu/mingxicheng/">Mingxi Cheng</a><sup></sup>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://sites.google.com/a/usc.edu/jili/">Ji Li</a><sup></sup>&nbsp&nbsp&nbsp
+                            </span>
+                            <span class="author-block">
+                                <a href="https://zheng-lab.cecs.anu.edu.au/">Liang Zheng</a><sup></sup>
+                            </span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup> </sup>The Australian National
+                                University&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                            <span class="author-block"><sup> </sup>The University of
+                                Liverpool&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                            <span class="author-block"><sup> </sup>Southeast University</span>
+                            <span class="author-block"><sup> </sup>Microsoft Research Asia</span>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <!-- TODO: add arxiv link -->
+                                    <a href="https://arxiv.org/abs/2406.04314" class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://github.com/RockeyCoss/SPO"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                  <a href="https://huggingface.co/SPO-Diffusion-Models"
+                                      class="external-link button is-normal is-rounded is-dark">
+                                      <span class="icon">
+                                        🤗
+                                      </span>
+                                      <span>Hugging Face</span>
+                                  </a>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/0.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/1.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/2.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/3.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/4.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/5.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/6.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/7.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/8.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/9.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/10.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/11.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/12.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/13.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/14.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/15.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/16.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/17.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/18.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/teaser/19.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Generating visually appealing images is fundamental to modern text-to-image generation models. 
+                            A potential solution to better aesthetics is direct preference optimization (DPO), 
+                            which has been applied to diffusion models to improve general image quality including prompt alignment and aesthetics. 
+                            Popular DPO methods propagate preference labels from clean image pairs to all the intermediate steps along the two generation trajectories. 
+                            However, preference labels provided in existing datasets are blended with layout and aesthetic opinions, which would disagree with aesthetic preference. 
+                            Even if aesthetic labels were provided (at substantial cost), it would be hard for the two-trajectory methods to capture nuanced visual differences at different steps.
+                        </p>
+                        <p>
+                            To improve aesthetics economically, this paper uses existing generic preference data and introduces step-by-step preference optimization 
+                            (SPO) that discards the propagation strategy and allows fine-grained image details to be assessed. Specifically, 
+                            at each denoising step, we 1) sample a pool of candidates by denoising from a shared noise latent, 
+                            2) use a step-aware preference model to find a suitable win-lose pair to supervise the diffusion model, and 
+                            3) randomly select one from the pool to initialize the next denoising step. 
+                            This strategy ensures that diffusion models focus on the subtle, fine-grained visual differences 
+                            instead of layout aspect. We find that aesthetic can be significantly enhanced by accumulating these 
+                            improved minor differences.
+                        </p>
+                        <p>
+                            When fine-tuning Stable Diffusion v1.5 and SDXL, SPO yields significant 
+                            improvements in aesthetics compared with existing DPO methods while not sacrificing image-text alignment 
+                            compared with vanilla models. Moreover, SPO converges much faster than DPO methods due to the step-by-step 
+                            alignment of fine-grained visual details. Code and models are available at 
+                            <a href="https://github.com/RockeyCoss/SPO" target="_blank">link</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Method Overview</h2>
+                <img src="./static/assets/method/architech.png" alt="pipeline" style="width: 90%;">
+            </div>
+        </div>
+
+        <br>
+    
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Quantitative Results</h2>
+                <div class="table-container">
+                    <table>
+                        <caption>Comparison of AI feedback metrics on SDXL.</caption>
+                        <tr>
+                            <th>Method</th>
+                            <th>PickScore</th>
+                            <th>HPSV2</th>
+                            <th>ImageReward</th>
+                            <th>Aesthetic</th>
+                        </tr>
+                        <tr>
+                            <td>SDXL</td>
+                            <td>21.95</td>
+                            <td>26.95</td>
+                            <td>0.5380</td>
+                            <td>5.950</td>
+                        </tr>
+                        <tr>
+                            <td>Diff.-DPO</td>
+                            <td>22.64</td>
+                            <td>29.31</td>
+                            <td>0.9436</td>
+                            <td>6.015</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td class="underline">SPO</td>
+                            <td class="underline">23.06</td>
+                            <td class="underline">31.80</td>
+                            <td class="underline">1.0803</td>
+                            <td class="underline">6.364</td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <caption>Comparison of AI feedback metrics on SD-1.5.</caption>
+                        <tr>
+                            <th>Method</th>
+                            <th>PickScore</th>
+                            <th>HPSV2</th>
+                            <th>ImageReward</th>
+                            <th>Aesthetic</th>
+                        </tr>
+                        <tr>
+                            <td>SD-1.5</td>
+                            <td>20.53</td>
+                            <td>23.79</td>
+                            <td>-0.1628</td>
+                            <td>5.365</td>
+                        </tr>
+                        <tr>
+                            <td>DDPO</td>
+                            <td>21.06</td>
+                            <td>24.91</td>
+                            <td>0.0817</td>
+                            <td>5.591</td>
+                        </tr>
+                        <tr>
+                            <td>D3PO</td>
+                            <td>20.76</td>
+                            <td>23.97</td>
+                            <td>-0.1235</td>
+                            <td>5.527</td>
+                        </tr>
+                        <tr>
+                            <td>Diff.-DPO</td>
+                            <td>20.98</td>
+                            <td>25.05</td>
+                            <td>0.1115</td>
+                            <td>5.505</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td class="underline">SPO</td>
+                            <td class="underline">21.43</td>
+                            <td class="underline">26.45</td>
+                            <td class="underline">0.1712</td>
+                            <td class="underline">5.887</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="container">
+                    <img src="./static/assets/results/SPO_vs_DPO_win_rate.png" alt="pipeline" style="width: 90%; margin-bottom: 5px;">
+                    <img src="./static/assets/results/SPO_vs_SDXL_win_rate.png" style="width: 90%; margin-bottom: 5px;">
+                    <br>
+                    <caption style="margin-top: 0;">User study results comparing SPO with Diffusion-DPO and Vanilla SDXL.</caption>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- <h4 class="title is-5" style="text-align: center;">Qualitative comparison between Vanilla SDXL, Diffusion-DPO-SDXL and SPO-SDXL</h2> -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3" style="text-align: center;">Qualitative Results</h2>
+                <div class="container">
+                    <img src="./static/assets/visual_com/compare_sdxl_dpo_spo.jpg" style="margin-bottom: 5px;">
+                    <br>
+                    <caption style="margin-top: 0;">Qualitative comparison between Vanilla SDXL, Diffusion-DPO-SDXL and SPO-SDXL.</caption>
+                </div>
+                <br>
+                <div class="container">
+                    <img src="./static/assets/glyph_byt5/typoclip_sdxl_compare.jpg"  style="margin-bottom: 5px;">
+                    <br>
+                    <caption style="margin-top: 0;">Qualitative comparison between Glyph-SDXL and Glyph-SDXL + SPO in graphic design image generation.</caption>
+                </div>
+                <br>    
+            </div>
+        </div>
+    
+        <br>
+
+        <h2 class="title is-3" style="text-align: center;">More Visual Results</h2>
+        <br>
+        <div class="container is-max-desktop">
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/0.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/1.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/2.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/3.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/4.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/5.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/6.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/7.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-centered">
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/8.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/9.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/10.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                    <div class="column is-3 ">
+                        <img src="./static/assets/more_visual/11.png" class="interpolation-image"
+                            alt="Interpolate start reference image." />
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>
+@article{liang2024step,
+    title={Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization},
+    author={Liang, Zhanhao and Yuan, Yuhui and Gu, Shuyang and Chen, Bohan and Hang, Tiankai and Cheng, Mingxi and Li, Ji and Zheng, Liang},
+    journal={arXiv preprint arXiv:2406.04314},
+    year={2024}
+}
+            </code></pre>
+        </div>
+    </section>
+
+
+    <section class="section" id="Acknowledgements">
+        <div class="container is-max-desktop content">
+            <h2 class="title">Acknowledgements</h2>
+            <br>
+            Website adapted from the following <a href="https://nerfies.github.io/">template</a>.
+        </div>
+    </section>
+
+</body>
+
+</html>

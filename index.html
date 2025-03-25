@@ -229,11 +229,18 @@
                         <div class="is-size-5 publication-authors">
                             <span class="author-block"><sup> </sup>The Australian National
                                 University&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                            <span class="author-block"><sup> </sup>The University of
+                            <span class="author-block"><sup> </sup>University of
                                 Liverpool&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                             <span class="author-block"><sup> </sup>Southeast University</span>
+                            <br>
+                            <span class="author-block"><sup> </sup>Microsoft&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                             <span class="author-block"><sup> </sup>Microsoft Research Asia</span>
                         </div>
+                        
+                        <br>
+                        <b style="font-size: 24px;" style="font-family: 'Titillium Web', sans-serif;">CVPR 2025</b>
+                        <br>
+                        <br>
 
                         <div class="column has-text-centered">
                             <div class="publication-links">
@@ -420,15 +427,15 @@
                             2) use a step-aware preference model to find a suitable win-lose pair to supervise the diffusion model, and 
                             3) randomly select one from the pool to initialize the next denoising step. 
                             This strategy ensures that diffusion models focus on the subtle, fine-grained visual differences 
-                            instead of layout aspect. We find that aesthetic can be significantly enhanced by accumulating these 
+                            instead of layout aspect. We find that aesthetics can be significantly enhanced by accumulating these 
                             improved minor differences.
                         </p>
                         <p>
                             When fine-tuning Stable Diffusion v1.5 and SDXL, SPO yields significant 
                             improvements in aesthetics compared with existing DPO methods while not sacrificing image-text alignment 
-                            compared with vanilla models. Moreover, SPO converges much faster than DPO methods due to the step-by-step 
-                            alignment of fine-grained visual details. Code and models are available at 
-                            <a href="https://github.com/RockeyCoss/SPO" target="_blank">link</a>.
+                            compared with vanilla models. Moreover, SPO converges much faster than DPO methods due to the use of 
+                            more correct preference labels provided by the step-aware preference model. Code and models are available at 
+                            <a href="https://github.com/RockeyCoss/SPO" target="_blank">https://github.com/RockeyCoss/SPO</a>.                       
                         </p>
                     </div>
                 </div>
@@ -441,7 +448,7 @@
         <div class="columns is-centered has-text-centered">
             <div class="column is-four-fifths">
                 <h2 class="title is-3">Method Overview</h2>
-                <img src="./static/assets/method/architech.png" alt="pipeline" style="width: 90%;">
+                <img src="./static/assets/method/architech.jpg" alt="pipeline" style="width: 90%;">
             </div>
         </div>
 
